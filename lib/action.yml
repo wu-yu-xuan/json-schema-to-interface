@@ -8,7 +8,14 @@ branding:
   icon: 'upload-cloud'
   color: 'blue'
 inputs:
-  name:
-    description: 'the name to say hello'
+  input_dir:
+    description: 'folder that contains json-schema to compile'
     required: false
-    default: 'github action'
+  output_dir:
+    description: 'folder that store temp compile result'
+    required: false
+    default: 'output'
+  output_interface:
+    description: 'output interface name'
+    required: false
+    default: 'Api'
