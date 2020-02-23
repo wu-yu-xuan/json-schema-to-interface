@@ -3,6 +3,7 @@ import { resolve, basename } from 'path';
 import inputs from './inputs';
 import compileSchemaToCode from './compileSchemaToCode';
 import { writeFile } from 'fs-extra';
+import { info } from '@actions/core';
 
 export default function generateFiles(fileInfos: FileInfo[]) {
   return Promise.all(
@@ -18,6 +19,7 @@ export default function generateFiles(fileInfos: FileInfo[]) {
         interfaceName,
         relativePath
       });
+      info(`writing ${outputPath}`);
       return writeFile(outputPath, code);
     })
   );
