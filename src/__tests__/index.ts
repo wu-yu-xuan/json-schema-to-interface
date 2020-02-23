@@ -1,4 +1,7 @@
 process.env.INPUT_DIR = 'example';
+process.env.OUTPUT_DIR = 'output';
+process.env.OUTPUT_INTERFACE = 'Api';
+
 import { setFailed } from '@actions/core';
 import getFileInfo from '../getFileInfo';
 import inputs from '../inputs';
