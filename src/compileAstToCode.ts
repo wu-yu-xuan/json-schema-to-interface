@@ -2,7 +2,7 @@ import ts from 'typescript';
 import { format } from 'prettier';
 import prettierOptions from './prettierOption';
 
-export default function transpileAstToCode(ast: ts.Node[]) {
+export default function compileAstToCode(ast: ts.Node[]) {
   const file = ts.createSourceFile(
     '',
     '',
