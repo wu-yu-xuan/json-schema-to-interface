@@ -1,13 +1,16 @@
 import { FileInfo } from './interface';
 import ts from 'typescript';
 import inputs from './inputs';
+import { basename } from 'path';
 
 export default function generateInterfaceAst(fileInfos: FileInfo[]) {
   const temp = fileInfos.reduce<{ [k: string]: { [k: string]: string } }>(
     (prev, cur) => {
       const index = cur.relativePath.lastIndexOf('/');
+      prev[cur.relativePath.slice(0, index)] =
+        prev[cur.relativePath.slice(0, index)] ?? {};
       prev[cur.relativePath.slice(0, index)][
-        cur.relativePath.slice(index + 1)
+        basename(cur.relativePath.slice(index + 1), '.json')
       ] = cur.interfaceName;
       return prev;
     },

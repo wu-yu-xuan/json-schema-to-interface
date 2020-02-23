@@ -1,13 +1,13 @@
-process.env.INPUT_DIR = 'example';
-process.env.OUTPUT_DIR = 'output';
-process.env.OUTPUT_INTERFACE = 'Api';
+process.env.INPUT_INPUT_DIR = 'example';
+process.env.INPUT_OUTPUT_DIR = 'output';
+process.env.INPUT_OUTPUT_INTERFACE = 'Api';
 
 import { setFailed } from '@actions/core';
 import getFileInfo from '../getFileInfo';
 import inputs from '../inputs';
-import prepareOutput from '../prepareOutput';
 import generateIndex from '../generateIndex';
 import generateFiles from '../generateFiles';
+import prepareOutput from '../prepareOutput';
 
 it('test run', async () => {
   try {
@@ -18,9 +18,16 @@ it('test run', async () => {
       }),
       prepareOutput()
     ]);
-    expect(fileInfos).toMatchInlineSnapshot();
-    generateIndex(fileInfos);
-    generateFiles(fileInfos);
+    expect(fileInfos).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "absolutePath": "D:/Frontend/json-schema-to-interface/example/user/post/request.json",
+          "interfaceName": "ExampleUserPostRequest",
+          "relativePath": "example/user/post/request.json",
+        },
+      ]
+    `);
+    await Promise.all([generateIndex(fileInfos), generateFiles(fileInfos)]);
   } catch (e) {
     setFailed(`Action failed with ${e}`);
   }

@@ -13,8 +13,7 @@ try {
     }),
     prepareOutput()
   ]);
-  generateIndex(fileInfos);
-  generateFiles(fileInfos);
+  await Promise.all([generateIndex(fileInfos), generateFiles(fileInfos)]);
 } catch (e) {
   setFailed(`Action failed with ${e}`);
 }

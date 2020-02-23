@@ -1,6 +1,7 @@
-import { extname, resolve, relative, sep } from 'path';
+import { extname, resolve, relative } from 'path';
 import { readdir, stat } from 'fs-extra';
 import { FileInfo } from './interface';
+import slash from 'slash';
 
 interface GetFileInfo {
   folder: string;
@@ -15,7 +16,7 @@ export default async function getFileInfo({
 }: GetFileInfo): Promise<FileInfo[]> {
   const fileList = await readdir(folder);
   return fileList.reduce<Promise<FileInfo[]>>(async (prev, cur) => {
-    const absolutePath = resolve(folder, cur);
+    const absolutePath = slash(resolve(folder, cur));
     const fileState = await stat(absolutePath);
     if (fileState.isDirectory()) {
       return [
@@ -27,12 +28,12 @@ export default async function getFileInfo({
        * 情况一: 未提供后缀名, 则所有文件都放入
        * 情况二: 提供了后缀, 则判断后缀
        */
-      const relativePath = relative(root, absolutePath);
+      const relativePath = slash(relative(root, absolutePath));
       const interfaceName = relativePath
         .slice(0, relativePath.length - ext.length)
-        .split(sep)
+        .split('/')
         .map(v => v[0].toUpperCase() + v.slice(1))
-        .join();
+        .join('');
       return [...(await prev), { absolutePath, relativePath, interfaceName }];
     }
     return prev;

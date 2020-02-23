@@ -16,5 +16,5 @@ export default function compileAstToCode(ast: ts.Node[]) {
     (ast as unknown) as ts.NodeArray<ts.Node>,
     file
   );
-  return format(code, prettierOptions);
+  return format(code, { ...prettierOptions, parser: 'typescript' });
 }
