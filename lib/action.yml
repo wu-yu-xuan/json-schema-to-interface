@@ -1,0 +1,14 @@
+name: 'Action Template'
+description: 'template for github action with typescript'
+author: 'wu-yu-xuan'
+runs:
+  using: 'node12'
+  main: './index.js'
+branding:
+  icon: 'upload-cloud'
+  color: 'blue'
+inputs:
+  name:
+    description: 'the name to say hello'
+    required: false
+    default: 'github action'
