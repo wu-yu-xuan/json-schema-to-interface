@@ -18,15 +18,7 @@ it('test run', async () => {
       }),
       prepareOutput()
     ]);
-    expect(fileInfos).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "absolutePath": "D:/Frontend/json-schema-to-interface/example/user/post/request.json",
-          "interfaceName": "ExampleUserPostRequest",
-          "relativePath": "example/user/post/request.json",
-        },
-      ]
-    `);
+    expect(fileInfos).toHaveLength(1);
     await Promise.all([generateIndex(fileInfos), generateFiles(fileInfos)]);
   } catch (e) {
     setFailed(`Action failed with ${e}`);

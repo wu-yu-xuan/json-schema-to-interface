@@ -4,7 +4,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "build": "ncc build src/index.ts -o lib",
+    "build": "ncc build src/index.ts -o lib -m",
     "test": "jest"
   },
   "author": "wu-yu-xuan",
