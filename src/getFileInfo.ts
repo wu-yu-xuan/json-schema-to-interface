@@ -2,6 +2,7 @@ import { extname, resolve, relative } from 'path';
 import { readdir, stat } from 'fs-extra';
 import { FileInfo } from './interface';
 import slash from 'slash';
+import { info } from '@actions/core';
 
 interface GetFileInfo {
   folder: string;
@@ -34,6 +35,7 @@ export default async function getFileInfo({
         .split('/')
         .map(v => v[0].toUpperCase() + v.slice(1))
         .join('');
+      info(`reading ${relativePath}`);
       return [...(await prev), { absolutePath, relativePath, interfaceName }];
     }
     return prev;
