@@ -17,7 +17,8 @@ module.exports = {
       namedExports: {
         'fs-extra': Object.keys(fs),
         prettier: Object.keys(prettier)
-      }
+      },
+      ignore: ['@microsoft/typescript-etw']
     })
   ]
 };
