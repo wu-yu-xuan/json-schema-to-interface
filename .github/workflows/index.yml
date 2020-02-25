@@ -34,6 +34,8 @@ jobs:
           node -v
           yarn build
           cp ./README.md ./lib/README.md
+      - name: test build
+        run: yarn test:build
       - name: deploy
         uses: wu-yu-xuan/deploy-github-pages@action
         with:
