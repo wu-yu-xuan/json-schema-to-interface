@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "rollup -c",
-    "test": "jest"
+    "test": "jest",
+    "test:build": "cross-env INPUT_INPUT_DIR=example INPUT_OUTPUT_DIR=output INPUT_OUTPUT_INTERFACE=Api node lib/index.js"
   },
   "author": "wu-yu-xuan",
   "license": "WTFPL",
@@ -18,13 +19,17 @@
     "@types/node": "^13.7.1",
     "@typescript-eslint/eslint-plugin": "^2.19.2",
     "@typescript-eslint/parser": "^2.19.2",
+    "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-babel": "^5.3.0",
     "jest": "^25.1.0",
     "rollup": "^1.31.1",
     "rollup-plugin-typescript2": "^0.26.0",
-    "ts-jest": "^25.2.1"
+    "ts-jest": "^25.2.1",
+    "ts-loader": "^6.2.1",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
   },
   "prettier": {
     "singleQuote": true,

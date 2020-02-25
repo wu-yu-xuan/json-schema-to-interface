@@ -8,7 +8,8 @@ module.exports = {
   input: './src/index.ts',
   output: {
     file: 'lib/index.js',
-    format: 'cjs'
+    format: 'cjs',
+    freeze: false
   },
   plugins: [
     typescript(),
@@ -18,7 +19,12 @@ module.exports = {
         'fs-extra': Object.keys(fs),
         prettier: Object.keys(prettier)
       },
-      ignore: ['@microsoft/typescript-etw']
+      /**
+       * '@microsoft/typescript-etw' is typescript log lib only runs on windows
+       * './parser-flow' is one of 'prettier' module, `r.process` <- r is not defined
+       *
+       */
+      ignore: ['@microsoft/typescript-etw', './parser-flow']
     })
   ]
 };
