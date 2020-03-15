@@ -2,6 +2,7 @@ import { FileInfo } from './interface';
 import ts from 'typescript';
 import inputs from './inputs';
 import { basename } from 'path';
+import { warning } from '@actions/core';
 
 interface Interface {
   [path: string]: {
@@ -14,6 +15,23 @@ interface Interface {
 interface CreateTypeLiteralNode {
   [k: string]: string | CreateTypeLiteralNode;
 }
+
+/**
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+ */
+const validMethods = [
+  'get',
+  'post',
+  'put',
+  'delete',
+  'options',
+  'head',
+  'connect',
+  'trace',
+  'patch'
+];
+
+const validRequestOrResponse = ['request', 'response'];
 
 /**
  * export default interface ${inputs.interfaceName} {
@@ -29,8 +47,27 @@ export default function generateInterfaceAst(fileInfos: FileInfo[]) {
     const pathArray = cur.relativePath.split('/');
     const { length } = pathArray;
     const path = pathArray.slice(0, length - 2).join('/');
-    const method = pathArray[length - 2];
-    const requestOrResponse = basename(pathArray[length - 1], '.json');
+    const method = pathArray[length - 2].toLowerCase();
+    if (!validMethods.includes(method)) {
+      warning(
+        `invalid method in ${
+          cur.relativePath
+        }, received ${method} but expect ${JSON.stringify(validMethods)}`
+      );
+    }
+    const requestOrResponse = basename(
+      pathArray[length - 1],
+      '.json'
+    ).toLowerCase();
+    if (!validRequestOrResponse.includes(requestOrResponse)) {
+      warning(
+        `invalid filename in ${
+          cur.relativePath
+        }, received ${requestOrResponse} but expect ${JSON.stringify(
+          validRequestOrResponse
+        )}`
+      );
+    }
     prev[path] = prev[path] ?? {};
     prev[path][method] = prev[path][method] ?? {};
     prev[path][method][requestOrResponse] = cur.interfaceName;
